@@ -6,19 +6,19 @@ public class Books {
     private String isbn;
     private String title;
     private String author;
-    private boolean checkedOut;
+    private boolean checkedOut;   // keep private
     private String checkedOutTo;
 
-
-    public Books(int id, String isbn, String title, String author, boolean isCheckout, String checkedOutTo) {
+    public Books(int id, String isbn, String title, String author, boolean checkedOut, String checkedOutTo) {
         this.id = id;
         this.isbn = isbn;
         this.title = title;
         this.author = author;
-        this.checkedOut = isCheckout;
+        this.checkedOut = checkedOut;
         this.checkedOutTo = checkedOutTo;
     }
 
+    // Getters and setters
     public int getId() {
         return id;
     }
@@ -51,13 +51,12 @@ public class Books {
         this.author = author;
     }
 
-    public boolean checkOut() {
-        boolean checkOut = false;
-        return checkOut;
+    public boolean isCheckedOut() {   // getter for boolean
+        return checkedOut;
     }
 
-    public void setCheckout(boolean checkout) {
-        checkOut = checkout;
+    public void setCheckedOut(boolean checkedOut) {  // setter
+        this.checkedOut = checkedOut;
     }
 
     public String getCheckedOutTo() {
@@ -68,17 +67,7 @@ public class Books {
         this.checkedOutTo = checkedOutTo;
     }
 
-    public String toString() {
-        return "Books{" +
-                "id=" + id +
-                ", isbn='" + isbn + '\n' +
-                ", title='" + title + '\n' +
-                ", author='" + author + '\n' +
-                ", isCheckout=" + isCheckout +
-                ", checkedOutTo='" + checkedOutTo + '\n' +
-                '}';
-    }
-
+    // Methods for checking out/in
     public void checkOut(String name) {
         this.checkedOut = true;
         this.checkedOutTo = name;
@@ -89,12 +78,15 @@ public class Books {
         this.checkedOutTo = "";
     }
 
-    public boolean isCheckedOut() {
-        return checkedOut;
-    }
-
-    public void setCheckedOut(boolean checkedOut) {
-        this.checkedOut = checkedOut;
+    public String toString() {
+        return "Books{" +
+                "id=" + id +
+                ", isbn='" + isbn + '\'' +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", checkedOut=" + checkedOut +
+                ", checkedOutTo='" + checkedOutTo + '\'' +
+                '}';
     }
 }
 

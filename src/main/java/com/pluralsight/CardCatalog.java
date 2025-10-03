@@ -79,7 +79,7 @@ public class CardCatalog {
     public static void showAvailableBooks(Books[] books, Scanner scan) {
         System.out.println("---Available Books---");
         for (Books book : books) {
-            if (!book.isCheckout()) {
+            if (!book.isCheckedOut()) {  // use getter
                 System.out.println(book.getId() + ": " + book.getTitle() + " (ISBN: " + book.getIsbn() + ")");
             }
         }
@@ -93,7 +93,7 @@ public class CardCatalog {
             String name = scan.nextLine();
             boolean found = false;
             for (Books book : books) {
-                if (book.getId() == id && !book.isCheckout()) {
+                if (book.getId() == id && !book.isCheckedOut()) {
                     book.checkOut(name);
                     System.out.println("Book checked out successfully!");
                     found = true;
@@ -110,7 +110,7 @@ public class CardCatalog {
     public static void showCheckedOutBooks(Books[] books, Scanner scan) {
         System.out.println("---Checked Out Books---");
         for (Books book : books) {
-            if (book.isCheckout()) {
+            if (book.isCheckedOut()) {  // use getter
                 System.out.println(book.getId() + ": " + book.getTitle() + " - Checked out to: " + book.getCheckedOutTo());
             }
         }
@@ -124,7 +124,7 @@ public class CardCatalog {
             scan.nextLine();
             boolean found = false;
             for (Books book : books) {
-                if (book.getId() == id && book.isCheckout()) {
+                if (book.getId() == id && book.isCheckedOut()) { // use getter
                     book.checkIn();
                     System.out.println("Book checked in successfully!");
                     found = true;
@@ -162,5 +162,3 @@ public class CardCatalog {
         return newBooks;
     }
 }
-
-
