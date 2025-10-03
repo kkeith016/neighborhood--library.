@@ -28,16 +28,44 @@ public class CardCatalog {
         books[18] = new Books(19, "978-0142424179", "The Fault in Our Stars", "John Green", false, "");
         books[19] = new Books(20, "978-0061122415", "Life of Pi", "Yann Martel", true, "Olivia Brown");
 
-
-    }
     //Scanner working
 
-    System.out.println("---Welcome to the Library Catalog System---\n");
+        System.out.println("---Welcome to the Library Catalog System---\n");
 
-    while(true) {
-        System.out.println("What do you want to do?");
-        System.out.println("   1 - Show Available Books");
-        System.out.println("   2 - Show Checked Out Books");
-        System.out.println("   3 - Exit\n");
+        while(true) {
+            System.out.println("What do you want to do?");
+            System.out.println("   1 - List All Books");
+            System.out.println("   2 - Show Available Books");
+            System.out.println("   3 - Show Checked Out Books");
+            System.out.println("   4 - Add a Book");
+            System.out.println("   5 - Exit\n");
+
+            System.out.print("Enter your choice: ");
+            int choice = scan.nextInt();
+            scan.nextLine(); // consume leftover newline
+
+            switch(choice){
+                case 1:
+                    listAllBooks(books);
+                    break;
+                case 2:
+                    System.out.print("Would you like to See Available Books? (y/n):");
+                    showAvailableBooks(books);
+                    break;
+                case 3:
+                    showCheckedOutBooks(books, scan);
+                    break;
+                case 4:
+                    books = addBook(scan, books);
+                    break;
+                case 5:
+                    System.out.println("Goodbye!");
+                    scan.close();
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Invalid choice. Try again.");
+            }
+        }
     }
-}
+
