@@ -30,7 +30,7 @@ public class CardCatalog {
         books[18] = new Books(19, "978-0142424179", "The Fault in Our Stars", "John Green", false, "");
         books[19] = new Books(20, "978-0061122415", "Life of Pi", "Yann Martel", true, "Olivia Brown");
 
-        System.out.println("---Welcome to the Library Catalog System---\n");
+        System.out.println("--- Welcome to the Library Catalog System ---\n");
 
         while (true) {
             System.out.println("What do you want to do?");
@@ -65,27 +65,31 @@ public class CardCatalog {
                 default:
                     System.out.println("Invalid choice. Try again.");
             }
+
+            System.out.println(); // add space between menu loops
         }
     }
 
     // List all books
     public static void listAllBooks(Books[] books) {
+        System.out.println("--- All Books ---");
         for (Books book : books) {
-            System.out.println(book.getId() + ": " + book.getTitle() + " (ISBN: " + book.getIsbn() + ") - " + book.getAuthor());
+            System.out.printf("%-3d %-40s ISBN: %s - Author: %s%n",
+                    book.getId(), book.getTitle(), book.getIsbn(), book.getAuthor());
         }
     }
 
     // Show available books and allow checkout
     public static void showAvailableBooks(Books[] books, Scanner scan) {
-        System.out.println("---Available Books---");
+        System.out.println("--- Available Books ---");
         for (Books book : books) {
-            if (!book.isCheckedOut()) {  // use getter
-                System.out.println(book.getId() + ": " + book.getTitle() + " (ISBN: " + book.getIsbn() + ")");
+            if (!book.isCheckedOut()) {
+                System.out.printf("%-3d %-40s ISBN: %s%n",
+                        book.getId(), book.getTitle(), book.getIsbn());
             }
         }
 
-
-        System.out.print("Enter book ID to check out or 0 to return: ");
+        System.out.print("\nEnter book ID to check out or 0 to return: ");
         int id = scan.nextInt();
         scan.nextLine();
 
@@ -96,27 +100,28 @@ public class CardCatalog {
             for (Books book : books) {
                 if (book.getId() == id && !book.isCheckedOut()) {
                     book.checkOut(name);
-                    System.out.println("Book checked out successfully!");
+                    System.out.println("\nBook checked out successfully!");
                     found = true;
                     break;
                 }
             }
             if (!found) {
-                System.out.println("Book ID not found or already checked out.");
+                System.out.println("\nBook ID not found or already checked out.");
             }
         }
     }
 
     // Show checked out books and allow check-in
     public static void showCheckedOutBooks(Books[] books, Scanner scan) {
-        System.out.println("---Checked Out Books---");
+        System.out.println("--- Checked Out Books ---");
         for (Books book : books) {
-            if (book.isCheckedOut()) {  // use getter
-                System.out.println(book.getId() + ": " + book.getTitle() + " - Checked out to: " + book.getCheckedOutTo());
+            if (book.isCheckedOut()) {
+                System.out.printf("%-3d %-40s Checked out to: %s%n",
+                        book.getId(), book.getTitle(), book.getCheckedOutTo());
             }
         }
 
-        System.out.print("Enter 'C' to check in a book or 'X' to return: ");
+        System.out.print("\nEnter 'C' to check in a book or 'X' to return: ");
         String input = scan.nextLine();
 
         if (input.equalsIgnoreCase("C")) {
@@ -125,15 +130,15 @@ public class CardCatalog {
             scan.nextLine();
             boolean found = false;
             for (Books book : books) {
-                if (book.getId() == id && book.isCheckedOut()) { // use getter
+                if (book.getId() == id && book.isCheckedOut()) {
                     book.checkIn();
-                    System.out.println("Book checked in successfully!");
+                    System.out.println("\nBook checked in successfully!");
                     found = true;
                     break;
                 }
             }
             if (!found) {
-                System.out.println("Book ID not found or not checked out.");
+                System.out.println("\nBook ID not found or not checked out.");
             }
         }
     }
@@ -159,7 +164,7 @@ public class CardCatalog {
         }
         newBooks[currentBooks.length] = newBook;
 
-        System.out.println("Book added successfully!");
+        System.out.println("\nBook added successfully!");
         return newBooks;
     }
 }
