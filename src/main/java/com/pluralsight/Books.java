@@ -65,4 +65,15 @@ public class Books {
     public void setCheckedOutTo(String checkedOutTo) {
         this.checkedOutTo = checkedOutTo;
     }
+
+    public String toString() {
+        return "Books{" +
+                "id=" + id +
+                ", isbn='" + isbn + '\n' +
+                ", title='" + title + '\n' +
+                ", author='" + author + '\n' +
+                ", isCheckout=" + isCheckout +
+                ", checkedOutTo='" + checkedOutTo + '\n' +
+                '}';
+    }
 }
