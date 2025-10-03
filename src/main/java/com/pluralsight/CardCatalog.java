@@ -84,6 +84,7 @@ public class CardCatalog {
             }
         }
 
+
         System.out.print("Enter book ID to check out or 0 to return: ");
         int id = scan.nextInt();
         scan.nextLine();
