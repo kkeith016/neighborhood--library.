@@ -3,9 +3,11 @@ package com.pluralsight;
 import java.util.Scanner;
 
 public class CardCatalog {
+
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
 
+        // Initialize book array
         Books[] books = new Books[20];
         books[0] = new Books(1, "978-0439023528", "The Hunger Games", "Suzanne Collins", false, "");
         books[1] = new Books(2, "978-0439139601", "Harry Potter and the Goblet of Fire", "J.K. Rowling", true, "Alice Johnson");
@@ -28,11 +30,9 @@ public class CardCatalog {
         books[18] = new Books(19, "978-0142424179", "The Fault in Our Stars", "John Green", false, "");
         books[19] = new Books(20, "978-0061122415", "Life of Pi", "Yann Martel", true, "Olivia Brown");
 
-    //Scanner working
-
         System.out.println("---Welcome to the Library Catalog System---\n");
 
-        while(true) {
+        while (true) {
             System.out.println("What do you want to do?");
             System.out.println("   1 - List All Books");
             System.out.println("   2 - Show Available Books");
@@ -44,19 +44,18 @@ public class CardCatalog {
             int choice = scan.nextInt();
             scan.nextLine(); // consume leftover newline
 
-            switch(choice){
+            switch (choice) {
                 case 1:
                     listAllBooks(books);
                     break;
                 case 2:
-                    System.out.print("Would you like to See Available Books? (y/n):");
-                    showAvailableBooks(books);
+                    showAvailableBooks(books, scan);
                     break;
                 case 3:
                     showCheckedOutBooks(books, scan);
                     break;
                 case 4:
-                    books = addBook(scan, books);
+                    books = addBook(books, scan);
                     break;
                 case 5:
                     System.out.println("Goodbye!");
@@ -68,4 +67,100 @@ public class CardCatalog {
             }
         }
     }
+
+    // List all books
+    public static void listAllBooks(Books[] books) {
+        for (Books book : books) {
+            System.out.println(book.getId() + ": " + book.getTitle() + " (ISBN: " + book.getIsbn() + ") - " + book.getAuthor());
+        }
+    }
+
+    // Show available books and allow checkout
+    public static void showAvailableBooks(Books[] books, Scanner scan) {
+        System.out.println("---Available Books---");
+        for (Books book : books) {
+            if (!book.isCheckout()) {
+                System.out.println(book.getId() + ": " + book.getTitle() + " (ISBN: " + book.getIsbn() + ")");
+            }
+        }
+
+        System.out.print("Enter book ID to check out or 0 to return: ");
+        int id = scan.nextInt();
+        scan.nextLine();
+
+        if (id != 0) {
+            System.out.print("Enter your name: ");
+            String name = scan.nextLine();
+            boolean found = false;
+            for (Books book : books) {
+                if (book.getId() == id && !book.isCheckout()) {
+                    book.checkOut(name);
+                    System.out.println("Book checked out successfully!");
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                System.out.println("Book ID not found or already checked out.");
+            }
+        }
+    }
+
+    // Show checked out books and allow check-in
+    public static void showCheckedOutBooks(Books[] books, Scanner scan) {
+        System.out.println("---Checked Out Books---");
+        for (Books book : books) {
+            if (book.isCheckout()) {
+                System.out.println(book.getId() + ": " + book.getTitle() + " - Checked out to: " + book.getCheckedOutTo());
+            }
+        }
+
+        System.out.print("Enter 'C' to check in a book or 'X' to return: ");
+        String input = scan.nextLine();
+
+        if (input.equalsIgnoreCase("C")) {
+            System.out.print("Enter book ID to check in: ");
+            int id = scan.nextInt();
+            scan.nextLine();
+            boolean found = false;
+            for (Books book : books) {
+                if (book.getId() == id && book.isCheckout()) {
+                    book.checkIn();
+                    System.out.println("Book checked in successfully!");
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                System.out.println("Book ID not found or not checked out.");
+            }
+        }
+    }
+
+    // Add a new book
+    public static Books[] addBook(Books[] currentBooks, Scanner scan) {
+        int id = currentBooks.length + 1; // auto-generate ID
+        System.out.print("Enter ISBN: ");
+        String isbn = scan.nextLine();
+
+        System.out.print("Enter Title: ");
+        String title = scan.nextLine();
+
+        System.out.print("Enter Author: ");
+        String author = scan.nextLine();
+
+        Books newBook = new Books(id, isbn, title, author, false, "");
+
+        // Add to array
+        Books[] newBooks = new Books[currentBooks.length + 1];
+        for (int i = 0; i < currentBooks.length; i++) {
+            newBooks[i] = currentBooks[i];
+        }
+        newBooks[currentBooks.length] = newBook;
+
+        System.out.println("Book added successfully!");
+        return newBooks;
+    }
+}
+
 
